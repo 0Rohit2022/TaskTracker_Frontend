@@ -33,7 +33,7 @@ const Header = () => {
   return (
     <nav className="header">
       <div>
-        <h2>TaskSecure App</h2>
+        <h2>TaskTracker App</h2>
       </div>
       <article>
         <Link to={"/"}>Home</Link>
