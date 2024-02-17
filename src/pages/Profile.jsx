@@ -39,9 +39,11 @@ const Profile = () => {
   return loading ? (
     <Loader />
   ) : (
-    <div>
-      <h1>{user?.name}</h1>
-      <p>{user?.email}</p>
+    <div className="container mx-auto px-4 py-8">
+      <div className="max-w-lg mx-auto bg-white shadow-md rounded-md p-6">
+        <h1 className="text-2xl font-semibold mb-4">{user?.name}</h1>
+        <p className="text-gray-600">{user?.email}</p>
+      </div>
     </div>
   );
 };

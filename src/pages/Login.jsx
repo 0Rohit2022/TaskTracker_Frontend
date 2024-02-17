@@ -42,15 +42,19 @@ function Login() {
   
 
   return (
-    <div className="login">
-      <section>
-        <form onSubmit={submitHandler}>
+    <div className="login flex justify-center items-center h-screen bg-gray-100">
+      <section className="w-full max-w-sm">
+        <form
+          onSubmit={submitHandler}
+          className="bg-white shadow-md rounded px-8 pt-5 pb-8 mb-5"
+        >
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className="block w-full mb-4 border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
           />
           <input
             type="password"
@@ -58,10 +62,21 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className="block w-full mb-4 border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
           />
-          <button  type="submit">Login</button>
-          <h4>Or</h4>
-          <Link to="/register">Sign Up</Link>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Login
+          </button>
+          <h4 className="mt-4 text-center font-bold">OR</h4>
+          <Link
+            to="/register"
+            className="block text-center mt-2 text-blue-500 hover:text-blue-700"
+          >
+            Sign Up
+          </Link>
         </form>
       </section>
     </div>

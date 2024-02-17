@@ -11,44 +11,39 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [tasks, setTask] = useState([]);
   const [refresh, setRefresh] = useState(false);
-  const {isAuthenticated} = useContext(Context);
+  const { isAuthenticated } = useContext(Context);
 
+  const updateHandler = async (id) => {
+    try {
+      const { data } = await axios.put(
+        `https://tasktracker-882a.onrender.com/api/v1/task/${id}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
 
-    const updateHandler = async (id) => {
-      try {
-        const { data } = await axios.put(
-          `https://tasktracker-882a.onrender.com/api/v1/task/${id}`,
-          {},
-          {
-            withCredentials: true,
-          }
-        );
+      toast.success(data.message);
+      setRefresh((prev) => !prev);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+  const deleteHandler = async (id) => {
+    try {
+      const { data } = await axios.delete(
+        `https://tasktracker-882a.onrender.com/api/v1/task/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
 
-        toast.success(data.message);
-        setRefresh((prev) => !prev);
-      } catch (error) {
-        toast.error(error.response.data.message);
-      }
-    };
-    const deleteHandler = async (id) => {
-      try {
-        const { data } = await axios.delete(
-          `https://tasktracker-882a.onrender.com/api/v1/task/${id}`,
-          {
-            withCredentials: true,
-          }
-        );
-
-        toast.success(data.message);
-        setRefresh((prev) => !prev);
-      } catch (error) {
-        toast.error(error.response.data.message);
-      }
-    };
-
-
-   
-
+      toast.success(data.message);
+      setRefresh((prev) => !prev);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -71,7 +66,7 @@ const Home = () => {
       setDescription("");
       toast.success(data.message);
       setLoading(false);
-      setRefresh((prev) => !prev)
+      setRefresh((prev) => !prev);
     } catch (error) {
       toast.error("Error: Task not Added successfully");
       setLoading(false);
@@ -92,47 +87,54 @@ const Home = () => {
       });
   }, [refresh]);
 
-  if(!isAuthenticated) return <Navigate to={"/login"} />
+  if (!isAuthenticated) return <Navigate to={"/login"} />;
   return (
-    <div className="container">
-      <div className="login">
-        <section>
-          <form onSubmit={submitHandler}>
+    <div className="container mx-auto px-4 py-8">
+      <div className="max-w-md mx-auto">
+        <div className="mb-8">
+          <div className="mb-4">
             <input
               type="text"
               placeholder="Title"
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              className="block w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
             />
+          </div>
+          <div className="mb-4">
             <input
               type="text"
               placeholder="Description"
               required
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              className="block w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
             />
-
-            <button disabled={loading} type="submit">
-              Add Task
-            </button>
-          </form>
-        </section>
+          </div>
+          <button
+            disabled={loading}
+            type="submit"
+            className="block w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onClick={submitHandler}
+          >
+            {loading ? "Adding Task..." : "Add Task"}
+          </button>
+        </div>
+        <div className="space-y-4">
+          {tasks.map((i) => (
+            <TodoItem
+              title={i.title}
+              description={i.description}
+              isCompleted={i.isCompleted}
+              updateHandler={updateHandler}
+              deleteHandler={deleteHandler}
+              id={i._id}
+              key={i._id}
+            />
+          ))}
+        </div>
       </div>
-
-      <section className="todosContainer">
-        {tasks.map((i) => (
-          <TodoItem
-            title={i.title}
-            description={i.description}
-            isCompleted={i.isCompleted}
-            updateHandler={updateHandler}
-            deleteHandler={deleteHandler}
-            id={i._id}
-            key={i._id}
-          />
-        ))}
-      </section>
     </div>
   );
 };

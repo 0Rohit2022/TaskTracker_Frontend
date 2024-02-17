@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import './styles/app.scss'
+import './main.css'
 import { createContext } from 'react'
 
 

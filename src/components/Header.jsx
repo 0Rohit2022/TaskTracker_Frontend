@@ -31,18 +31,36 @@ const Header = () => {
   
 
   return (
-    <nav className="header">
+    <nav className="header bg-gray-800 py-4 px-6 flex justify-between items-center">
       <div>
-        <h2>TaskTracker App</h2>
+        <h2 className="text-white text-[19px]">TaskTracker App</h2>
       </div>
-      <article>
-        <Link to={"/"}>Home</Link>
-        <Link to={"/profile"}>Profile</Link>
+      <article className="flex items-center space-x-4">
+        <Link to={"/"} className="text-white text-2xl hover:text-gray-300">
+          Home
+        </Link>
+        <Link
+          to={"/profile"}
+          className="text-white  text-2xl hover:text-gray-300"
+        >
+          Profile
+        </Link>
 
         {isAuthenticated ? (
-          <button disabled={loading} onClick={logoutHandler} className="btn">Logout</button>
+          <button
+            disabled={loading}
+            onClick={logoutHandler}
+            className="btn bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded"
+          >
+            Logout
+          </button>
         ) : (
-          <Link to={"/login"}>login</Link>
+          <Link
+            to={"/login"}
+            className="text-white  text-2xl hover:text-gray-300"
+          >
+            Login
+          </Link>
         )}
       </article>
     </nav>
